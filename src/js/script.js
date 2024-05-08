@@ -81,6 +81,16 @@
       menuContainer.appendChild(thisProduct.element);
     }
 
+    /*getElements(){
+      const thisProduct = this;
+    
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    }*/
+
     initAccordion(){
       const thisProduct = this;
   
@@ -94,7 +104,7 @@
         event.preventDefault();
   
         /* find active product (product that has active class) */
-        const activeProduct =  document.querySelector('.product.acive');
+        const activeProduct =  document.querySelector('.product.active');
   
         /* if there is active product and it's not thisProduct.element, remove class active from it */
         if(activeProduct && activeProduct != thisProduct.element){

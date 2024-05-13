@@ -63,9 +63,8 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
-      thisProduct.processOrder(); 
-
-      console.log('new Product:', thisProduct);
+      thisProduct.initAmountWidget();
+      thisProduct.processOrder();
     }
 
     renderInMenu(){
@@ -84,7 +83,7 @@
       menuContainer.appendChild(thisProduct.element);
     }
 
-    getElements(){
+    getElements(){ //(REFERENCJE)
       const thisProduct = this;
     
       thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
@@ -93,6 +92,8 @@
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget); 
+
     } 
 
     initAccordion(){
@@ -120,7 +121,7 @@
 
     initOrderForm(){
       const thisProduct = this;
-      console.log('initOrderForm:', thisProduct);
+      //console.log('initOrderForm:', thisProduct);
 
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
@@ -189,18 +190,108 @@
         }
 
       }
+
+      // multiply price by amount
+      price *= thisProduct.amountWidget.value;
     
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
 
+    initAmountWidget() { // METODA
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem); //INSTANCJA KLASY
+      thisProduct.amountWidgetElem.addEventListener('uptaded', function(event){
+        event.preventDefault();
+
+        thisProduct.processOrder();   
+      }); 
+
+    }
   } 
+
+  class AmountWidget {
+    constructor(element) {
+      const thisWidget = this;
+
+      console.log('AmountWidget:', thisWidget);
+      console.log('Constructor arguments:', element);
+
+      thisWidget.getElements(element);
+      //thisWidget.setValue(thisWidget.input.value);
+      thisWidget.setValue(thisWidget.input.value ? thisWidget.input.value : settings.amountWidget.defaultValue); // sprawdzić, czy to jest dobrze: warunek ? wartość_jeśli_prawda : wartość_jeśli_fałsz
+      thisWidget.initActions();
+
+    }
+
+    getElements(element) {
+      const thisWidget = this;
+    
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+
+    setValue(value){
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+
+      // TO DO: Add validation  - NIE DZIAŁA 
+
+      if(thisWidget.value !== newValue && !isNaN(newValue)){
+        thisWidget.value = newValue;
+
+       }else if (newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
+          thisWidget.value = newValue;
+
+        }else if (newValue < settings.amountWidget.defaultMin){
+          thisWidget.value = settings.amountWidget.defaultMin;
+
+        }else {
+          thisWidget.value = settings.amountWidget.defaultMax;
+      }
+
+      thisWidget.value = newValue;
+      thisWidget.announce();
+      thisWidget.input.value = thisWidget.value;
+
+    }
+
+    initActions(){ // PO WPISANIU TEKSTU NIE WRACA DO POPRZEDNIEJ WARTOŚCI
+      const thisWidget = this;
+
+      thisWidget.input.addEventListener('change', function(event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.input.value);
+      });
+
+      thisWidget.linkDecrease.addEventListener('click', function(event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value - 1);
+      }); 
+      
+      thisWidget.linkIncrease.addEventListener('click', function(event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value + 1);
+      });  
+    }
+
+    announce(){
+      const thisWidget = this;
+
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
+    }
+    
+  } 
+  
 
   const app = {
     initMenu: function() {
       const thisApp = this;
-
-      console.log('thisApp.data:', thisApp.data);
 
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
@@ -219,7 +310,7 @@
       console.log('thisApp:', thisApp);
       console.log('classNames:', classNames);
       console.log('settings:', settings);
-      console.log('templates:', templates);
+      console.log('templates:', templates); 
 
       thisApp.initData();
       thisApp.initMenu();

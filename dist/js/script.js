@@ -171,7 +171,7 @@
               // add option price to price variable
               price += option.price;
             }
-            if(optionImage && !optionImage.classList.includes(classNames.menuProduct.imageVisible)){
+            if(optionImage && !optionImage.classList.contains(classNames.menuProduct.imageVisible)){
               optionImage.classList.add(classNames.menuProduct.imageVisible);          
             }
 
@@ -181,7 +181,7 @@
               // reduce price variable
               price -= option.price;
             }
-            if(optionImage && optionImage.classList.includes(classNames.menuProduct.imageVisible)){
+            if(optionImage && optionImage.classList.contains(classNames.menuProduct.imageVisible)){
               optionImage.classList.remove(classNames.menuProduct.imageVisible);
             }
           }

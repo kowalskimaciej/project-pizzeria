@@ -70,7 +70,7 @@ const settings = {
   amountWidget: {
     defaultValue: 1,
     defaultMin: 1,
-    defaultMax: 9,
+    defaultMax: 10,
   }, // CODE CHANGED
   // CODE ADDED START
   cart: {
@@ -255,8 +255,9 @@ const templates = {
       console.log('Constructor arguments:', element);
 
       thisWidget.getElements(element);
-      //thisWidget.setValue(thisWidget.input.value);
-      thisWidget.setValue(thisWidget.input.value ? thisWidget.input.value : settings.amountWidget.defaultValue); // sprawdzić, czy to jest dobrze: warunek ? wartość_jeśli_prawda : wartość_jeśli_fałsz
+
+      thisWidget.setValue(thisWidget.input.value ? thisWidget.input.value : settings.amountWidget.defaultValue); 
+
       thisWidget.initActions();
 
     }
@@ -274,29 +275,23 @@ const templates = {
       const thisWidget = this;
 
       const newValue = parseInt(value);
+      const isGreaterThanMin = settings.amountWidget.defaultMin <= newValue;
+      const isLessThanMax = settings.amountWidget.defaultMax >= newValue;
+       
+      
+      // TO DO: Add validation 
 
-      // TO DO: Add validation  - NIE DZIAŁA 
+       if(thisWidget.value !== newValue && !isNaN(newValue) && isGreaterThanMin && isLessThanMax){
 
-      if(thisWidget.value !== newValue && !isNaN(newValue)){
-        thisWidget.value = newValue;
+        thisWidget.value = newValue; 
+      }  
 
-       }else if (newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
-          thisWidget.value = newValue;
-
-        }else if (newValue < settings.amountWidget.defaultMin){
-          thisWidget.value = settings.amountWidget.defaultMin;
-          
-        }else {
-          thisWidget.value = settings.amountWidget.defaultMax;
-      }
-
-      thisWidget.value = newValue;
       thisWidget.announce();
       thisWidget.input.value = thisWidget.value;
 
     }
 
-    initActions(){ // PO WPISANIU TEKSTU NIE WRACA DO POPRZEDNIEJ WARTOŚCI
+    initActions(){ 
       const thisWidget = this;
 
       thisWidget.input.addEventListener('change', function(event){

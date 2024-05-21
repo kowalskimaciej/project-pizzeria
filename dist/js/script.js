@@ -243,7 +243,7 @@ const templates = {
       const thisProduct = this;
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.dom.amountWidgetElem); //INSTANCJA KLASY
-      thisProduct.dom.amountWidgetElem.addEventListener('uptaded', function(event){
+      thisProduct.dom.amountWidgetElem.addEventListener('updated', function(event){
         event.preventDefault();
 
         thisProduct.processOrder();
@@ -375,7 +375,10 @@ const templates = {
     announce(){
       const thisWidget = this;
 
-      const event = new Event('updated');
+      const event = new CustomEvent('updated', {
+        bubbles: true
+      });
+
       thisWidget.element.dispatchEvent(event);
     }
     
@@ -389,8 +392,6 @@ const templates = {
 
       thisCart.getElements(element);
       thisCart.initActions();
-
-      console.log('new Cart', thisCart);
     }
 
     getElements(element){
@@ -403,6 +404,14 @@ const templates = {
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
 
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+
+      thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
+
+      thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
+
+      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
+
+      thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
     }
 
     initActions() {
@@ -412,6 +421,10 @@ const templates = {
         event.preventDefault();
 
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
+      });
+      
+      thisCart.dom.productList.addEventListener('updated', function() {
+        thisCart.update();
       });
     }
 
@@ -429,12 +442,48 @@ const templates = {
 
       /* add CartProduct instance to products array */
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+      
+      /* update Cart price and product amount */
+      thisCart.update();
 
-      console.log('menuProduct', menuProduct);
-      console.log('generatedDOM', generatedDOM);
+      console.log('thisCart.products', thisCart.products);
+
+
     }
 
+    update() {
+      const thisCart = this;
 
+      const deliveryFee = settings.cart.defaultDeliveryFee;
+
+      let totalNumber = 0;
+      let subtotalPrice = 0;
+
+      for (let product of thisCart.products) {
+        totalNumber += product.amount;
+        subtotalPrice += product.price;
+      }
+
+      if (thisCart.products.length === 0) {
+        thisCart.totalPrice = 0;
+        thisCart.dom.deliveryFee.innerHTML = 0;
+        thisCart.dom.subtotalPrice.innerHTML = 0;
+        thisCart.dom.totalPrice.innerHTML = 0;
+        thisCart.dom.totalNumber.innerHTML = 0;
+        for (let totalPrice of thisCart.dom.totalPrice) {
+          totalPrice.innerHTML = 0;
+        }
+      } else {
+        thisCart.totalPrice = subtotalPrice + deliveryFee;
+        thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+        thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
+        thisCart.dom.totalNumber.innerHTML = totalNumber;
+        for (let totalPrice of thisCart.dom.totalPrice) {
+          totalPrice.innerHTML = thisCart.totalPrice;
+        }
+      }
+
+    }
   }
 
   class CartProduct{
@@ -452,8 +501,6 @@ const templates = {
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
       
-      console.log('thisCartProduct:', thisCartProduct)
-
     }
 
     getElements(element){
@@ -468,7 +515,6 @@ const templates = {
       thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
 
-      console.log("thisCartProduct:", thisCartProduct.dom.amountWidget);
     }
 
     initAmountWidget() {
@@ -478,8 +524,6 @@ const templates = {
 
       thisCartProduct.amountWidget.value = thisCartProduct.amount;
       thisCartProduct.amountWidget.input.value = thisCartProduct.amount;
-
-      console.log('thisCartProduct.amountWidget', thisCartProduct.amountWidget);
 
       thisCartProduct.dom.amountWidget.addEventListener('updated', function(event) {
         event.preventDefault();

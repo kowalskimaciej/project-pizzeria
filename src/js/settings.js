@@ -6,6 +6,7 @@ export const select = {
       containerOf: {
         menu: "#product-list",
         cart: "#cart",
+        pages: "#pages",
       },
       all: {
         menuProducts: "#product-list > .product",
@@ -22,12 +23,11 @@ export const select = {
       },
       widgets: {
         amount: {
-          input: "input.amount", // CODE CHANGED
+          input: "input.amount", 
           linkDecrease: 'a[href="#less"]',
           linkIncrease: 'a[href="#more"]',
         },
       },
-      // CODE ADDED START
       cart: {
         productList: ".cart__order-summary",
         toggleTrigger: ".cart__summary",
@@ -47,16 +47,24 @@ export const select = {
         edit: '[href="#edit"]',
         remove: '[href="#remove"]',
       },
-      // CODE ADDED END
+      nav: {
+        links: '.main-nav a',
+      },
 };
   
 export const classNames = {
       menuProduct: {
-      wrapperActive: 'active',
-      imageVisible: 'active',
-      },
+        wrapperActive: 'active',
+        imageVisible: 'active',
+        },
       cart: {
         wrapperActive: 'active',
+      },
+      pages: {
+        active: 'active',
+      },
+      nav: {
+        active: 'active', 
       },
 };
   

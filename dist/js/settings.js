@@ -1,12 +1,14 @@
 export const select = {
       templateOf: {
         menuProduct: "#template-menu-product",
-        cartProduct: "#template-cart-product", // CODE ADDED
+        cartProduct: "#template-cart-product",
+        bookingWidget: '#template-booking-widget',
       },
       containerOf: {
         menu: "#product-list",
         cart: "#cart",
         pages: "#pages",
+        booking: '.booking-wrapper',
       },
       all: {
         menuProducts: "#product-list > .product",
@@ -50,6 +52,11 @@ export const select = {
       nav: {
         links: '.main-nav a',
       },
+      booking: {
+        peopleAmount: '.people-amount',
+        hoursAmount: '.hours-amount',
+        tables: '.floor-plan .table',
+      },
 };
   
 export const classNames = {
@@ -91,4 +98,6 @@ export const templates = {
       cartProduct: Handlebars.compile(
         document.querySelector(select.templateOf.cartProduct).innerHTML
       ),
+      bookingWidget: Handlebars.compile(document.querySelector(select.templateOf.bookingWidget).innerHTML),
+
 };

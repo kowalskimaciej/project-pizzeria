@@ -4,9 +4,6 @@ class AmountWidget {
       constructor(element) {
         const thisWidget = this;
   
-        console.log('AmountWidget:', thisWidget);
-        console.log('Constructor arguments:', element);
-  
         thisWidget.getElements(element);
   
         thisWidget.setValue(

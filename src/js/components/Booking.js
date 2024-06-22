@@ -31,7 +31,7 @@ class Booking {
         startDateParam,
         endDateParam,
       ],
-      
+
       eventsRepeat: [
         settings.db.repeatParam,
         endDateParam,
@@ -157,6 +157,71 @@ class Booking {
     }
   }
 
+  initTables(event) {
+    const thisBooking = this;
+
+    event.preventDefault();
+
+    const clickedElement = event.target;
+
+    if (clickedElement.classList.contains(classNames.booking.table)) {
+      if (!clickedElement.classList.contains(classNames.booking.tableBooked)) {
+        if (!clickedElement.classList.contains(classNames.booking.selected)) {
+          thisBooking.resetSelection();
+
+          clickedElement.classList.add(classNames.booking.selected);
+
+          if (thisBooking.selectedTable !== clickedElement.getAttribute(select.booking.dataTable)) {
+            thisBooking.selectedTable = clickedElement.getAttribute(select.booking.dataTable);
+            console.log(thisBooking.selectedTable);
+          }
+        } else {
+          clickedElement.classList.remove(classNames.booking.selected);
+          thisBooking.selectedTable = null;
+          console.log(thisBooking.selectedTable);
+        }
+      } else {
+        alert('This table is taken');
+      }
+    }
+
+    const bookingInputs = thisBooking.dom.form.querySelectorAll('input');
+
+    for (const input of bookingInputs) {
+
+      if (
+        input.getAttribute('name') === settings.booking.inputDateName
+        || 
+        input.getAttribute('name') === settings.booking.inputHourName
+        ||
+        input.getAttribute('name') === settings.booking.inputPeopleName
+        ||
+        input.getAttribute('name') === settings.booking.inputHoursName
+      ) {
+
+        input.addEventListener('change', function() {
+          thisBooking.resetSelection();
+        });
+
+      } 
+
+    }
+  }
+
+  resetSelection() {
+    const thisBooking = this;
+
+    for (let table of thisBooking.dom.tables) {
+      if (table.classList.contains(classNames.booking.selected)) {
+        table.classList.remove(classNames.booking.selected);
+      }
+    }
+
+    thisBooking.selectedTable = null;
+    console.log(thisBooking.selectedTable);
+  }
+
+
   render(wrapper) {
     const thisBooking = this;
 
@@ -174,6 +239,9 @@ class Booking {
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
   
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    thisBooking.dom.tablesWrapper = thisBooking.dom.wrapper.querySelector(select.booking.tablesWrapper);
+
+    thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
   }
 
   initWidgets() {
@@ -187,6 +255,10 @@ class Booking {
 
     thisBooking.dom.wrapper.addEventListener('updated', function() {
       thisBooking.updateDOM();
+    });
+
+    thisBooking.dom.tablesWrapper.addEventListener('click', function(event) {
+      thisBooking.initTables(event);
     });
   }
 }

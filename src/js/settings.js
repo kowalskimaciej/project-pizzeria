@@ -43,6 +43,9 @@ export const select = {
     peopleAmount: '.people-amount',
     hoursAmount: '.hours-amount',
     tables: '.floor-plan .table',
+    tablesWrapper: '.floor-plan',
+    form: '.booking-form',
+    dataTable: 'data-table',
   },
   nav: {
     links: '.main-nav a',
@@ -78,6 +81,8 @@ export const classNames = {
   booking: {
     loading: 'loading',
     tableBooked: 'booked',
+    table: 'table',
+    selected: 'selected',
   },
   nav: {
     active: 'active',
@@ -91,7 +96,7 @@ export const settings = {
   amountWidget: {
     defaultValue: 1,
     defaultMin: 1,
-    defaultMax: 10,
+    defaultMax: 9,
   },
   cart: {
     defaultDeliveryFee: 20,
@@ -105,6 +110,10 @@ export const settings = {
   },
   booking: {
     tableIdAttribute: 'data-table',
+    inputDateName: 'date',
+    inputHourName: 'hour',
+    inputPeopleName: 'people',
+    inputHoursName: 'hours',
   },
   db: {
     url: '//localhost:3131',

@@ -221,6 +221,56 @@ class Booking {
     console.log(thisBooking.selectedTable);
   }
 
+  sendBooking() {
+    const thisBooking = this;
+
+    console.log(thisBooking);
+
+    const url = settings.db.url + '/' + settings.db.bookings;
+
+    const payload = {};
+
+    payload.date = thisBooking.date;
+    payload.hour = thisBooking.hour;
+    payload.table = thisBooking.selectedTable;
+    payload.duration = thisBooking.hoursAmount.correctValue;
+    payload.ppl = thisBooking.peopleAmount.correctValue;
+    payload.starters = [];
+    payload.phone = thisBooking.dom.phone.value;
+    payload.address = thisBooking.dom.address.value;
+
+    for (const starter of thisBooking.dom.starters) {
+      if (starter.checked) {
+        payload.starters.push(starter.value);
+      }
+    }
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(url, options)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(parsedResponse) {
+        console.log('parsedResponse', parsedResponse);
+
+        thisBooking.makeBooked(
+          parsedResponse.date,
+          parsedResponse.hour,
+          parsedResponse.duration,
+          parsedResponse.table
+        );
+
+        console.log('thisBooking.booked', thisBooking.booked);
+      });
+  }
+
 
   render(wrapper) {
     const thisBooking = this;
@@ -242,6 +292,13 @@ class Booking {
     thisBooking.dom.tablesWrapper = thisBooking.dom.wrapper.querySelector(select.booking.tablesWrapper);
 
     thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
+
+    thisBooking.dom.submitButton = thisBooking.dom.wrapper.querySelector(select.booking.submit);
+
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
+
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
   }
 
   initWidgets() {
@@ -259,6 +316,12 @@ class Booking {
 
     thisBooking.dom.tablesWrapper.addEventListener('click', function(event) {
       thisBooking.initTables(event);
+    });
+
+    thisBooking.dom.submitButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      console.log('Submit! Submit!');
+      thisBooking.sendBooking();
     });
   }
 }

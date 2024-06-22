@@ -46,6 +46,10 @@ export const select = {
     tablesWrapper: '.floor-plan',
     form: '.booking-form',
     dataTable: 'data-table',
+    submit: 'button[type="submit"]',
+    starters: 'input[type="checkbox"]',
+    phone: 'input[name="phone"]',
+    address: 'input[name="address"]',
   },
   nav: {
     links: '.main-nav a',

@@ -44,7 +44,8 @@ utils.numberToHour = function(number){
 };
 
 utils.hourToNumber = function(hour){
-  const parts = hour.split(':');
+  const hourString = hour.toString();
+  const parts = hourString.split(':');
 
   return parseInt(parts[0]) + parseInt(parts[1])/60;
 };

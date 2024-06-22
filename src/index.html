@@ -250,7 +250,23 @@
   </script>
   <script id="template-home-widget" type="text/x-handlebars-template">
     <div class="home-widget">
-      TU KIEDYŚ COŚ BĘDZIE
+      <div class="row home-row">
+
+        <div class="col-6 home-col {{ order-online.id }}">
+          <h2>ORDER ONLINE</h2>
+          {{{ order-online.image }}}
+        </div>
+
+        <div class="col-6 home-col {{ book-a-table.id }}">
+          <h2>BOOK A TABLE</h2>
+          {{{ book-a-table.image }}}
+        </div>
+
+        <div class="col-12 home-col opening-hours">
+          <h2>OPENING HOURS</h2>
+          <p>TUE-SUN, 12PM-12AM</p>
+        </div>
+      </div>
     </div>
   </script>
   <script src="./vendor/range-slider.min.js"></script>

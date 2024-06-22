@@ -88,6 +88,26 @@ const app = {
       });
   },
 
+  initHomeData: function() {
+    const thisApp = this;
+
+    const url = settings.db.url + '/' + settings.db.home;
+
+    thisApp.homeData = {};
+
+    fetch(url)
+      .then(function(rawResponse) {
+        return rawResponse.json();
+      })
+      .then(function(parsedResponse) {
+        /* save parsedResponse as thisApp.data.products */
+        thisApp.homeData = parsedResponse;
+
+        /* execute initMenu method */
+        thisApp.initHome();
+      });
+  },
+
   initCart: function() {
     const thisApp = this;
 
@@ -112,7 +132,7 @@ const app = {
     const thisApp = this;
 
     const homeContainer = document.querySelector(select.containerOf.home);
-    thisApp.home = new Home(homeContainer);
+    thisApp.home = new Home(homeContainer, thisApp.homeData);
   },  
 
   init: function(){
@@ -127,7 +147,7 @@ const app = {
     thisApp.initData();
     thisApp.initCart();
     thisApp.initBooking();
-    thisApp.initHome();
+    thisApp.initHomeData();
   },
 };
 

@@ -1,0 +1,49 @@
+.home-wrapper {
+  margin: 42px auto;
+  padding: 72px 48px;
+  background-color: #ffffff;
+}
+
+.home-row {
+  justify-content: space-between;
+}
+
+.home-col {
+  text-align: center;
+  background-color: #bbb;
+  margin-bottom: 7px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-light;
+  border-radius: 4px;
+
+  h2 {
+    font-family: $font-header;
+    padding: 0;
+    margin: 0;
+    font-size: 26px;
+    font-weight: $font-bold;
+    letter-spacing: -0.65px;
+  }
+
+  p {
+    font-family: $font-text;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: $font-light;
+  }
+
+  &.order-online,
+  &.book-a-table {
+    width: calc((100% - 7px) / 2);
+    background-color: $color-darker;
+  }
+
+  &.opening-hours {
+    flex-direction: column;
+    background-color: $color-main;
+  }
+}

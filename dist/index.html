@@ -7,7 +7,7 @@
   <title>Pizzeria</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext" rel="stylesheet">
-  <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v6.3.0/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
   <link rel="stylesheet" href="./vendor/range-slider.min.css">
   <link rel="stylesheet" href="./css/style.css">
@@ -306,8 +306,30 @@
         </div>
       </div>
     </div>
-  </script>
+    <div class="instagram">
+      <div class="row">
 
+        {{#each instagram}}
+
+        <div class="tile">
+          <div class="image">
+            {{{ this }}}
+          </div>
+          <div class="icons">
+            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-share-nodes"></i>
+          </div>
+
+        </div>
+
+        {{/each}}
+
+      </div>
+      <a href="#" class="instagram-more">
+        View more on Instagram
+      </a>
+    </div>
+  </script>
   <script src="./vendor/range-slider.min.js"></script>
   <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

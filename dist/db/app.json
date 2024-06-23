@@ -311,22 +311,30 @@
     "quotes": [
       {
         "image": "<img src=\"images/home/pizza-3.jpg\">",
-        "title": "AMAZING SERVICE",
+        "title": "Delicios food",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas viverra tortor, eu ullamcorper dui imperdiet nec. Nunc sed dolor at elit lobortis sodales.",
-        "author": "- Margaret Osborne"
+        "author": "- Kaslik Amanov"
       },
       {
         "image": "<img src=\"images/home/pizza-3.jpg\">",
-        "title": "VERY PLEASURABLE PLACE",
+        "title": "Great venue",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas viverra tortor, eu ullamcorper dui imperdiet nec. Nunc sed dolor at elit lobortis sodales.",
-        "author": "- Timmy Turner"
+        "author": "- Kaslik Amanov"
       },
       {
         "image": "<img src=\"images/home/pizza-3.jpg\">",
-        "title": "I WILL COME BACK",
+        "title": "Best service",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas viverra tortor, eu ullamcorper dui imperdiet nec. Nunc sed dolor at elit lobortis sodales.",
-        "author": "- Elizabeth Morgan"
+        "author": "- Rupert Sasanov"
       }
+    ],
+    "instagram": [
+      "<img src=\"images/home/pizza-4.jpg\">",
+      "<img src=\"images/home/pizza-5.jpg\">",
+      "<img src=\"images/home/pizza-6.jpg\">",
+      "<img src=\"images/home/pizza-7.jpg\">",
+      "<img src=\"images/home/pizza-8.jpg\">",
+      "<img src=\"images/home/pizza-9.jpg\">"
     ]
   }
 }

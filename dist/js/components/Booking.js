@@ -1,4 +1,3 @@
-
 import { templates, select, settings, classNames } from '../settings.js';
 import utils from '../utils.js';
 import AmountWidget from './AmountWidget.js';
@@ -9,9 +8,12 @@ class Booking {
   constructor(element) {
     const thisBooking = this;
 
-    thisBooking.render(element);
+    thisBooking.selectedTable;
+
+    thisBooking.render(element);    
     thisBooking.initWidgets();
     thisBooking.getData();
+    
   }
 
   getData() {
@@ -25,20 +27,16 @@ class Booking {
         startDateParam,
         endDateParam,
       ],
-
       eventsCurrent: [
         settings.db.notRepeatParam,
         startDateParam,
         endDateParam,
       ],
-
       eventsRepeat: [
         settings.db.repeatParam,
         endDateParam,
       ],
     };
-
-    // console.log('getData params', params);
 
     const urls = {
       booking:       settings.db.url + '/' + settings.db.bookings 
@@ -48,8 +46,6 @@ class Booking {
       eventsRepeat:  settings.db.url + '/' + settings.db.events   
                                      + '?' + params.eventsRepeat.join('&'),
     };
-
-    // console.log('getData urls', urls);
 
     Promise.all([
       fetch(urls.booking),
@@ -67,9 +63,6 @@ class Booking {
         ]);
       })
       .then(function([bookings, eventsCurrent, eventsRepeat]) {
-        // console.log('b', bookings);
-        // console.log('ec', eventsCurrent);
-        // console.log('er', eventsRepeat);
         thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
   }
@@ -98,8 +91,6 @@ class Booking {
       }
     }
 
-    console.log('thisBooking.booked', thisBooking.booked);
-
     thisBooking.updateDOM();
   }
 
@@ -113,8 +104,6 @@ class Booking {
     const startHour = utils.hourToNumber(hour);
 
     for (let hourBlock = startHour; hourBlock < startHour + duration; hourBlock += 0.5) {
-      // console.log('loop', hourBlock);
-
       if(typeof thisBooking.booked[date][hourBlock] == 'undefined') {
         thisBooking.booked[date][hourBlock] = [];
       }
@@ -252,7 +241,7 @@ class Booking {
       },
       body: JSON.stringify(payload),
     };
-
+    
     fetch(url, options)
       .then(function(response) {
         return response.json();
@@ -270,7 +259,6 @@ class Booking {
         console.log('thisBooking.booked', thisBooking.booked);
       });
   }
-
 
   render(wrapper) {
     const thisBooking = this;

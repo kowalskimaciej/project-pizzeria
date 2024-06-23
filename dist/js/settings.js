@@ -53,6 +53,10 @@ export const select = {
     phone: 'input[name="phone"]',
     address: 'input[name="address"]',
   },
+  home: {
+    carousel: '.carousel',
+    carouselPlugin: '.main-carousel',
+  },
   nav: {
     links: '.main-nav a',
   },
@@ -73,6 +77,9 @@ export const select = {
     price: '.cart__product-price',
     edit: '[href="#edit"]',
     remove: '[href="#remove"]',
+  },
+  linkWrapper: {
+    links: '.link-wrapper a',
   },
 };
 

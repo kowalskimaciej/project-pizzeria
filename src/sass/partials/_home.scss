@@ -1,3 +1,7 @@
+#home a {
+  color: $color-light;
+}
+
 .home-wrapper {
   margin: 42px auto;
   padding: 72px 48px;
@@ -13,37 +17,168 @@
   background-color: #bbb;
   margin-bottom: 7px;
   height: 120px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: $color-light;
   border-radius: 4px;
+  position: relative;
+
+  h2,
+  p {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    padding: 0;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    transition: all .2s ease;
+    width: 100%;
+  }
 
   h2 {
     font-family: $font-header;
-    padding: 0;
-    margin: 0;
     font-size: 26px;
     font-weight: $font-bold;
     letter-spacing: -0.65px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
   }
 
   p {
     font-family: $font-text;
-    padding: 0;
-    margin: 0;
     font-size: 14px;
     font-weight: $font-light;
+    transform: translate(-50%, 0);
+    top: unset;
+    bottom: 0;
+    opacity: 0;
+  }
+
+  img {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   &.order-online,
   &.book-a-table {
     width: calc((100% - 7px) / 2);
     background-color: $color-darker;
+    overflow: hidden;
+    cursor: pointer;
   }
 
   &.opening-hours {
-    flex-direction: column;
     background-color: $color-main;
+
+    h2,
+    p {
+      transform: translate(-50%, 0);
+    }
+
+    h2 {
+      top: 25px;
+    }
+
+    p {
+      bottom: 30px;
+      opacity: 1;
+    }
+  }
+
+  .show-on-hover {
+    display: block;
+  }
+
+  &.order-online:hover,
+  &.book-a-table:hover {
+    h2 {
+      transform: translate(-50%, 0);
+      top: 15px;
+    }
+
+    p {
+      opacity: 1;
+      bottom: 20px;
+    }
+
+  }
+}
+
+.carousel {
+  margin-top: 100px;
+
+  .main-carousel {
+    padding-bottom: 35px;
+
+    .carousel-cell {
+      min-height: 193px !important;
+      width: 100%;
+    }
+
+    .titles-col {
+      color: $color-dark;
+      width: calc(100% - 193px);
+      padding-left: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+
+      h3,
+      p {
+        margin: 0;
+        padding: 0;
+      }
+
+      .title {
+        font-size: 14px;
+        font-weight: $font-bold;
+      }
+
+      .content {
+        font-size: 14px;
+        font-weight: $font-normal;
+        line-height: 23px;
+        margin: 15px 0 25px;
+      }
+
+      .author {
+        font-size: 14px;
+        font-style: italic;
+      }
+    }
+
+    .row {
+      width: 100%;
+    }
+
+    .image-col {
+      .image-wrapper {
+        width: 193px;
+        padding-top: 100%;
+        background-color: $color-dark;
+        position: relative;
+        border: 0 solid $color-dark;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
 }
